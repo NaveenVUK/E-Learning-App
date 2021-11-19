@@ -1,27 +1,32 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { StartAdminLogin } from "../../Actions/UserActions";
 
 import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup"
 
-const formValidation = yup.object({
-    email: yup.string().email("Enter valid email").required("Email is required"),
-    password: yup.string().required(),
-})
 
-const LogInForm = () => {
-    const formik = useFormik(
-        {
-            initialValues: {
-                email: "",
-                password: "",
-            },
-            onSubmit: (values) => {
-                console.log("formdata", values);
-            },
-            validationSchema: formValidation
-        }
-    )
+const LogInForm = (props) => {
+    const { userLoggedStatus } = props
+    const dispatch = useDispatch()
+
+    const formValidation = yup.object({
+        email: yup.string().email("Enter valid email").required("Email is required"),
+        password: yup.string().required(),
+    })
+
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+        },
+        onSubmit: (values) => {
+            dispatch(StartAdminLogin(values, props, userLoggedStatus))
+        },
+        validationSchema: formValidation
+    })
 
     return (
         <div>

@@ -1,32 +1,40 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
+import { StartAdminRegister } from "../../Actions/UserActions";
 
 import { Button, TextField } from "@mui/material";
-import { useFormik } from "formik";
+import { useFormik, getIn } from "formik";
 import * as yup from "yup"
 
 const formValidation = yup.object({
     username: yup.string().required("username is required"),
     email: yup.string().email("Enter valid email").required("Email is required"),
     password: yup.string().required(),
-    Academyname: yup.string().required()
+    academy: yup.object({
+        name: yup.string().required('Academy name is required'),
+    })
 })
 
-const RegisterForm = () => {
-    const formik = useFormik(
-        {
-            initialValues: {
-                username: "",
-                email: "",
-                password: "",
-                Academyname: "",
+const RegisterForm = (props) => {
+    const dispatch = useDispatch()
+    console.log("register", props);
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            email: "",
+            password: "",
+            academy: {
+                name: "",
                 website: ""
-            },
-            onSubmit: (values) => {
-                console.log("formdata", values);
-            },
-            validationSchema: formValidation
-        }
-    )
+            }
+        },
+        onSubmit: (values) => {
+            dispatch(StartAdminRegister(values))
+        },
+        validationSchema: formValidation
+    })
 
     return (
         <div>
@@ -63,21 +71,21 @@ const RegisterForm = () => {
                     helperText={formik.touched.password && formik.errors.password}
                 /><br /><br />
                 <TextField
-                    id="Academyname"
-                    name="Academyname"
+                    id="name"
+                    name="academy.name"
                     label="Academy name"
                     type="text"
-                    value={formik.values.Academyname}
+                    value={formik.values.academy.name}
                     onChange={formik.handleChange}
-                    error={formik.touched.Academyname && Boolean(formik.errors.Academyname)}
-                    helperText={formik.touched.Academyname && formik.errors.Academyname}
+                    error={getIn(formik.touched, "academy.name") && Boolean(getIn(formik.errors, "academy.name"))}
+                    helperText={getIn(formik.touched, "academy.name") && getIn(formik.errors, "academy.name")}
                 /><br /><br />
                 <TextField
                     id="website"
-                    name="website"
-                    label="website"
+                    name="academy.website"
+                    label="Academy website"
                     type="text"
-                    value={formik.values.website}
+                    value={formik.values.academy.website}
                     onChange={formik.handleChange}
                 /><br /><br />
                 <Button type="submit" variant="contained">Submit</Button>
