@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from '@mui/icons-material/Edit';
 
-import { StartUserInfo } from "../../Actions/UserActions";
 import EditForm from "../../HelperFuncations/EditForm";
 import { Button } from "@mui/material";
 
@@ -16,9 +15,6 @@ const Account = () => {
         return state.user.user
     })
 
-    useEffect(() => {
-        dispatch(StartUserInfo())
-    }, [])
 
     const EditToggle = () => {
         const toggle = !isEdiClick

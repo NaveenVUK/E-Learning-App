@@ -71,6 +71,7 @@ export const StartUserUpdate = (formData, EditToggle) => {
         })
             .then((response) => {
                 const userResponse = response.data
+                console.log('res', userResponse)
                 dispatch(AddUserInfo(userResponse))
                 EditToggle()
             })

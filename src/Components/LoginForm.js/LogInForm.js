@@ -1,7 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-
-import { StartAdminLogin } from "../../Actions/UserActions";
 
 import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -9,8 +6,7 @@ import * as yup from "yup"
 
 
 const LogInForm = (props) => {
-    const { userLoggedStatus } = props
-    const dispatch = useDispatch()
+    const { formSubmit } = props
 
     const formValidation = yup.object({
         email: yup.string().email("Enter valid email").required("Email is required"),
@@ -23,7 +19,7 @@ const LogInForm = (props) => {
             password: "",
         },
         onSubmit: (values) => {
-            dispatch(StartAdminLogin(values, props, userLoggedStatus))
+            formSubmit(values)
         },
         validationSchema: formValidation
     })
