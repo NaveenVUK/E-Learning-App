@@ -1,13 +1,14 @@
-import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { StartUserUpdate } from "../Actions/UserActions";
+
+import { StartUserUpdate } from "../../Actions/UserActions";
+
+import { Button } from "@mui/material";
 
 const EditForm = (props) => {
     const dispatch = useDispatch()
     const { data, editID, EditToggle } = props
     const [feildData, setFeildData] = useState(data ? data : "")
-    // console.log(editID);
 
     const handleInputChnage = (e) => {
         setFeildData(e.target.value)

@@ -1,7 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { StartAdminLogin } from "../../Actions/UserActions";
+import { StartAdminLogin } from "../../../Actions/UserActions";
+
 import LogInForm from "./LogInForm";
 
 const AdminLogIn = (props) => {
@@ -13,7 +14,7 @@ const AdminLogIn = (props) => {
     }
 
     return (
-        <LogInForm userLoggedStatus={userLoggedStatus} formSubmit={formSubmit} />
+        <LogInForm userLoggedStatus={userLoggedStatus} name="Admin" formSubmit={formSubmit} />
     )
 }
 

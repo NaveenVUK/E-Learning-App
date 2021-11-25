@@ -4,11 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import './index.css';
+import { StartGetStudents, StartUserInfo } from './Actions/UserActions';
 import App from './App';
 import ConfigureStore from "./Store/ConfigureStore"
-import { StartUserInfo } from './Actions/UserActions';
-
-
 
 const store = ConfigureStore()
 
@@ -18,18 +16,18 @@ store.subscribe(() => {
 
 if (localStorage.hasOwnProperty("token")) {
   store.dispatch(StartUserInfo())
+  store.dispatch(StartGetStudents())
 }
 console.log("global", store.getState());
-
 
 const Result = (
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <div className="bodyStyle">
+        <App />
+      </div>
     </BrowserRouter>
   </Provider>
 )
 
 ReactDOM.render(Result, document.getElementById('root'));
-
-
