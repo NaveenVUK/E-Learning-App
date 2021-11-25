@@ -121,7 +121,7 @@ const NavBarContainor = (props) => {
             </AppBar>
 
             <Route path="/register" component={RegisterForm} exact />
-            <Route path="/addstudent" component={AddStudent} exact />
+            {/* <Route path="/addstudent" component={AddStudent} exact /> */}
             <Route path="/" component={Home} exact />
             <Route path="/admin/login" render={(props) => {
                 return <AdminLogIn {...props} userLoggedStatus={userLoggedStatus} />

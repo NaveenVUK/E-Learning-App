@@ -19,7 +19,7 @@ export const StartAdminRegister = (values) => {
     }
 }
 
-export const startStudentRegister = (formData, props) => {
+export const startStudentRegister = (formData, props, handleClose, clearForm) => {
     return (dispatch) => {
         axios.post("https://dct-e-learning.herokuapp.com/api/admin/students", formData, {
             headers: {
@@ -32,8 +32,10 @@ export const startStudentRegister = (formData, props) => {
                 if (data.hasOwnProperty("errors")) {
                     Object.keys(data).length === 1 ? alert(data.errors) : alert(data.message)
                 } else {
-                    alert("Student Added Successfully !!")
+                    swal("Student Added Successfully !!")
                     dispatch(addStudent(data))
+                    clearForm()
+                    handleClose()
                     props.history.push("/allstudents")
                 }
             })
@@ -100,7 +102,7 @@ export const StartUserInfo = () => {
                 dispatch(AddUserInfo(userResponse))
             })
             .catch((error) => {
-                alert("StartUserInfo", error)
+                alert(error)
             })
     }
 }
@@ -112,7 +114,7 @@ const AddUserInfo = (user) => {
     }
 }
 
-export const StartUserUpdate = (formData, EditToggle) => {
+export const StartUserUpdate = (formData, handleClose) => {
     return (dispatch) => {
         axios.put("https://dct-e-learning.herokuapp.com/api/admin", formData, {
             headers: {
@@ -122,7 +124,8 @@ export const StartUserUpdate = (formData, EditToggle) => {
             .then((response) => {
                 const userResponse = response.data
                 dispatch(AddUserInfo(userResponse))
-                EditToggle()
+                swal("Details are modified")
+                handleClose()
             })
             .catch((error) => {
                 alert(error)
@@ -143,7 +146,7 @@ export const StartGetStudents = () => {
 
             })
             .catch((error) => {
-                alert("StartGetStudents", error)
+                alert(error)
             })
     }
 }
@@ -189,5 +192,35 @@ export const removeStudent = (student) => {
     return {
         type: "REMOVE-STUDENT",
         payload: student
+    }
+}
+
+export const startStudentUpdate = (id, formData, alertmsg) => {
+    return (dispatch) => {
+        axios.put(`https://dct-e-learning.herokuapp.com/api/students/${id}`, formData, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const updateResponse = response.data
+                console.log("updateResponse", updateResponse);
+                if (updateResponse.hasOwnProperty("errors")) {
+                    alert(updateResponse.errors)
+                } else {
+                    alertmsg()
+                    dispatch(updateStudent(updateResponse))
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+}
+
+export const updateStudent = (updateInfo) => {
+    return {
+        type: "UPDATE-STUDENT",
+        payload: updateInfo
     }
 }

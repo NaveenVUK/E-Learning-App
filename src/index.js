@@ -18,7 +18,6 @@ if (localStorage.hasOwnProperty("token")) {
   store.dispatch(StartUserInfo())
   store.dispatch(StartGetStudents())
 }
-console.log("global", store.getState());
 
 const Result = (
   <Provider store={store}>

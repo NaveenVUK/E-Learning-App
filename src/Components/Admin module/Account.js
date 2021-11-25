@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from '@mui/icons-material/Edit';
 
-import EditForm from "./EditForm"
+import EditAdminInfo from "./EditAdminInfo"
 import { Button } from "@mui/material";
 
 const Account = () => {
@@ -28,29 +28,21 @@ const Account = () => {
 
     return (
         <div style={{ textAlign: "center", marginTop: "90px" }}>
-            {isEdiClick && (
+            {/* {isEdiClick && (
                 <>
-                    <EditForm data={editFormData} editID={editKey} EditToggle={EditToggle} />
+                    <EditAdminInfo data={editFormData} editID={editKey} EditToggle={EditToggle} />
                     <Button onClick={EditToggle}> Cancel </Button>
                 </>
-            )}
+            )} */}
             {Object.keys(user).length !== 0 ? (
                 <>
                     <h1>Account Info </h1>
-                    <h4>UserName - {user.username} <EditIcon onClick={() => {
-                        handleEditClick(user.username, "username")
-                    }} /> </h4>
-                    <h4>Email - {user.email} <EditIcon onClick={() => {
-                        handleEditClick(user.email, "email")
-                    }} /></h4>
+                    <h4>UserName - {user.username}</h4> <EditAdminInfo name={user.username} title="username" />
+                    <h4>Email - {user.email} <EditAdminInfo name={user.email} title="email" /> </h4>
                     <h4>Role - {user.role} </h4> <br />
                     <h1> Acedamy Information </h1>
-                    <h4> AcademyName - {user.academy.name} <EditIcon onClick={() => {
-                        handleEditClick(user.academy.name, "academy.name")
-                    }} /></h4>
-                    <h4> AcademyName - {user.academy.website} <EditIcon onClick={() => {
-                        handleEditClick(user.academy.website, "academy.website")
-                    }} /></h4>
+                    <h4> Academy Name - {user.academy.name} <EditAdminInfo name={user.academy.name} title="academy.name" /></h4>
+                    <h4> Academy Web Site - {user.academy.website} <EditAdminInfo name={user.academy.website} title="academy.website" /></h4>
                 </>
             ) : (
                 <p> Loading .... </p>

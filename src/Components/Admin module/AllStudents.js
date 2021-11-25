@@ -9,6 +9,9 @@ import swal from "sweetalert";
 import { startDeletStudent } from "../../Actions/UserActions";
 import { Box } from "@mui/system";
 import SearchIcon from '@mui/icons-material/Search';
+import NewAddStudentForm from "./AddStudentForm";
+import NewEditStudentInfo from "./EditStudentInfo";
+import StudentView from "./StudentView";
 
 const AllStudents = (props) => {
     const dispatch = useDispatch()
@@ -36,7 +39,7 @@ const AllStudents = (props) => {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    const altermsg = () => { swal("Poof! Your note has been deleted!", { icon: "success", }) }
+                    const altermsg = () => { swal("Poof! User has been deleted!", { icon: "success", }) }
                     dispatch(startDeletStudent(id, altermsg));
                 } else {
                     swal("User is safe!");
@@ -56,6 +59,7 @@ const AllStudents = (props) => {
                 <Button variant="contained" onClick={() => { props.history.push("/dashboard") }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left" }}>
                     Back
                 </Button><br />
+                <NewAddStudentForm />
                 <Paper
                     component="form"
                     sx={{ p: '2px 4px', display: 'flex', width: 300, height: 50 }}
@@ -79,6 +83,7 @@ const AllStudents = (props) => {
                         <th> Role </th>
                         <th> Created Date </th>
                         <th> Updated Data </th>
+                        <th> View </th>
                         <th> Edit </th>
                         <th> Delete </th>
                     </tr>
@@ -92,7 +97,8 @@ const AllStudents = (props) => {
                                 <td> {ele.role} </td>
                                 <td> {ele.createdAt && ele.createdAt.slice(0, 10)}</td>
                                 <td> {ele.updatedAt && ele.updatedAt.slice(0, 10)}</td>
-                                <td> <EditIcon /> </td>
+                                <td> <StudentView {...ele} /> </td>
+                                <td> <NewEditStudentInfo {...ele} /> </td>
                                 <td> <DeleteRoundedIcon onClick={() => handleEditClick(ele._id)} /></td>
                             </tr>
                         )

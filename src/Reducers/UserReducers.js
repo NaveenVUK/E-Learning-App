@@ -23,6 +23,16 @@ const UserRedcuers = (state = userInitialState, Action) => {
             })
             return { ...state, students: [...result] }
         }
+        case "UPDATE-STUDENT": {
+            const result = state.students.map((student) => {
+                if (student._id === Action.payload._id) {
+                    return { ...Action.payload }
+                } else {
+                    return { ...student }
+                }
+            })
+            return { ...state, students: [...result] }
+        }
         default: {
             return state
         }

@@ -1,6 +1,7 @@
 import { Button } from "@mui/material"
 import React from "react"
 import { Link } from "react-router-dom"
+import AlertDialog from "../Admin module/AddStudentForm"
 
 const DashBoard = () => {
 
@@ -9,9 +10,9 @@ const DashBoard = () => {
             <Button variant="contained" style={{ margin: "10px 10px 10px 10px", backgroundColor: "red", borderRadius: "22px" }}>
                 <Link to="/allstudents" style={{ color: "white", textDecoration: "none" }}> All Students </Link>
             </Button> <br />
-            <Button variant="contained" style={{ margin: "10px 10px 10px 10px", borderRadius: "22px" }}>
+            {/* <Button variant="contained" style={{ margin: "10px 10px 10px 10px", borderRadius: "22px" }}>
                 <Link to="/addstudent" style={{ color: "white", textDecoration: "none" }}> Add Student </Link>
-            </Button><br />
+            </Button><br /> */}
         </div>
     )
 }
