@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { withRouter } from 'react-router';
+
+import { startStudentRegister } from '../../Actions/AdminActions';
+
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useDispatch } from "react-redux";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import { useFormik, getIn } from "formik";
 import * as yup from "yup"
@@ -12,8 +15,6 @@ import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Box } from "@mui/system";
-import { startStudentRegister } from '../../Actions/UserActions';
-import { withRouter } from 'react-router';
 
 const useStyles = makeStyles({
     paperStyle: {

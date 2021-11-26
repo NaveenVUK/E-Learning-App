@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-
-import { Autocomplete, Button, IconButton, InputBase, Paper, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
+
+import NewAddStudentForm from "./AddStudentForm";
+import EditStudentInfo from "../Student Module/EditStudentInfo";
+import StudentView from "./StudentView";
+import { startDeletStudent } from "../../Actions/AdminActions";
+
+import { Button, IconButton, InputBase, Paper } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import swal from "sweetalert";
-import { startDeletStudent } from "../../Actions/UserActions";
 import { Box } from "@mui/system";
 import SearchIcon from '@mui/icons-material/Search';
-import NewAddStudentForm from "./AddStudentForm";
-import NewEditStudentInfo from "./EditStudentInfo";
-import StudentView from "./StudentView";
 
 const AllStudents = (props) => {
     const dispatch = useDispatch()
@@ -98,7 +99,7 @@ const AllStudents = (props) => {
                                 <td> {ele.createdAt && ele.createdAt.slice(0, 10)}</td>
                                 <td> {ele.updatedAt && ele.updatedAt.slice(0, 10)}</td>
                                 <td> <StudentView {...ele} /> </td>
-                                <td> <NewEditStudentInfo {...ele} /> </td>
+                                <td> <EditStudentInfo {...ele} /> </td>
                                 <td> <DeleteRoundedIcon onClick={() => handleEditClick(ele._id)} /></td>
                             </tr>
                         )

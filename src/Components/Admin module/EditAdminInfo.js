@@ -12,7 +12,7 @@ import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Box } from "@mui/system";
-import { startStudentRegister, startStudentUpdate, StartUserUpdate } from '../../Actions/UserActions';
+import { startStudentRegister, startStudentUpdate, StartAdminUpdate } from '../../Actions/AdminActions';
 import { withRouter } from 'react-router';
 import EditIcon from '@mui/icons-material/Edit';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -57,7 +57,7 @@ const EditAdminInfo = (props) => {
         onSubmit: (values) => {
             let formData = {}
             formData[title] = values.name
-            dispatch(StartUserUpdate(formData, handleClose))
+            dispatch(StartAdminUpdate(formData, handleClose))
         },
         validationSchema: formValidation
     })

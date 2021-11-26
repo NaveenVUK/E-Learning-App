@@ -45,18 +45,24 @@ export const startStudentRegister = (formData, props, handleClose, clearForm) =>
     }
 }
 
+export const addStudent = (student) => {
+    return {
+        type: "ADD-STUDENT",
+        payload: student
+    }
+}
+
 export const StartAdminLogin = (values, props, userLoggedStatus) => {
     return (dispatch) => {
         axios.post("https://dct-e-learning.herokuapp.com/api/admin/login", values)
             .then((response) => {
                 const loginResponse = response.data
-                // const result = loginResponse.token
-                // const decoded = jwt_decode(result)
+                const decoded = jwt_decode(loginResponse.token)
                 if (loginResponse.hasOwnProperty("errors")) {
                     alert(loginResponse.errors)
                 } else {
                     localStorage.setItem("token", loginResponse.token)
-                    // localStorage.setItem("user", JSON.stringify(decoded))
+                    localStorage.setItem("user", JSON.stringify(decoded))
                     swal("Successfully logged in !!")
                     userLoggedStatus()
                     props.history.push("/")
@@ -68,29 +74,7 @@ export const StartAdminLogin = (values, props, userLoggedStatus) => {
     }
 }
 
-export const startStudentLogin = (values, props, userLoggedStatus) => {
-    return (dispatch) => {
-        axios.post("https://dct-e-learning.herokuapp.com/api/students/login", values)
-            .then((response) => {
-                const loginResponse = response.data
-                const result = loginResponse.token
-                console.log("token", result);
-                if (loginResponse.hasOwnProperty("errors")) {
-                    alert(loginResponse.errors)
-                } else {
-                    localStorage.setItem("token", result)
-                    alert("Successfully logged in")
-                    userLoggedStatus()
-                    props.history.push("/dashboard")
-                }
-            })
-            .catch((error) => {
-                alert(error)
-            })
-    }
-}
-
-export const StartUserInfo = () => {
+export const StartGetAdminInfo = () => {
     return (dispatch) => {
         axios.get("https://dct-e-learning.herokuapp.com/api/admin/account", {
             headers: {
@@ -99,7 +83,7 @@ export const StartUserInfo = () => {
         })
             .then((response) => {
                 const userResponse = response.data
-                dispatch(AddUserInfo(userResponse))
+                dispatch(updateAdminInfo(userResponse))
             })
             .catch((error) => {
                 alert(error)
@@ -107,14 +91,14 @@ export const StartUserInfo = () => {
     }
 }
 
-const AddUserInfo = (user) => {
+const updateAdminInfo = (user) => {
     return {
         type: "ADD-USER-INFO",
         payload: user
     }
 }
 
-export const StartUserUpdate = (formData, handleClose) => {
+export const StartAdminUpdate = (formData, handleClose) => {
     return (dispatch) => {
         axios.put("https://dct-e-learning.herokuapp.com/api/admin", formData, {
             headers: {
@@ -123,7 +107,7 @@ export const StartUserUpdate = (formData, handleClose) => {
         })
             .then((response) => {
                 const userResponse = response.data
-                dispatch(AddUserInfo(userResponse))
+                dispatch(updateAdminInfo(userResponse))
                 swal("Details are modified")
                 handleClose()
             })
@@ -158,13 +142,6 @@ export const allStudents = (students) => {
     }
 }
 
-export const addStudent = (student) => {
-    return {
-        type: "ADD-STUDENT",
-        payload: student
-    }
-}
-
 export const startDeletStudent = (id, alertmsg) => {
     return (dispatch) => {
         axios.delete(`https://dct-e-learning.herokuapp.com/api/admin/students/${id}`, {
@@ -192,35 +169,5 @@ export const removeStudent = (student) => {
     return {
         type: "REMOVE-STUDENT",
         payload: student
-    }
-}
-
-export const startStudentUpdate = (id, formData, alertmsg) => {
-    return (dispatch) => {
-        axios.put(`https://dct-e-learning.herokuapp.com/api/students/${id}`, formData, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        })
-            .then((response) => {
-                const updateResponse = response.data
-                console.log("updateResponse", updateResponse);
-                if (updateResponse.hasOwnProperty("errors")) {
-                    alert(updateResponse.errors)
-                } else {
-                    alertmsg()
-                    dispatch(updateStudent(updateResponse))
-                }
-            })
-            .catch((error) => {
-                alert(error)
-            })
-    }
-}
-
-export const updateStudent = (updateInfo) => {
-    return {
-        type: "UPDATE-STUDENT",
-        payload: updateInfo
     }
 }

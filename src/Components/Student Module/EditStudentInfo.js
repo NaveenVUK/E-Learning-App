@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
+
+import { startStudentRegister, startStudentUpdate } from '../../Actions/StudentActions';
+
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useDispatch } from "react-redux";
 import { Avatar, Button, Grid, Paper, TextField } from "@mui/material";
 import { useFormik, getIn } from "formik";
 import * as yup from "yup"
-import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Box } from "@mui/system";
-import { startStudentRegister, startStudentUpdate } from '../../Actions/UserActions';
 import { withRouter } from 'react-router';
 import EditIcon from '@mui/icons-material/Edit';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { StartAdminRegister } from "../../Actions/UserActions";
+import { StartAdminRegister } from "../../Actions/AdminActions"
 
 import { Avatar, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useFormik, getIn } from "formik";

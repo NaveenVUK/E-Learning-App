@@ -4,15 +4,16 @@ import { Link, Route } from "react-router-dom"
 import RegisterForm from "../Admin module/RegisterForm";
 import Home from "./Home";
 import Account from "../Admin module/Account";
-import AdminLogIn from "../Admin module/LoginForm.js/AdminLogin";
-import StudentLogIn from "../Admin module/LoginForm.js/StudentLogin";
-import AddStudent from "../Admin module/AddStudent";
+import AdminLogIn from "../Admin module/AdminLogin";
+import StudentLogIn from "../Student Module/StudentLogin";
 import AllStudents from "../Admin module/AllStudents";
-import DashBoard from "./DashBoard";
+import DashBoard from "../Admin module/DashBoard";
 
 import { Menu, MenuItem, Button, AppBar, Toolbar, CssBaseline, Typography } from "@mui/material";
 import swal from "sweetalert";
 import { makeStyles } from "@mui/styles";
+import { useSelector } from "react-redux";
+import Cources from "../Student Module/Cources";
 
 const useStyle = makeStyles({
     root: {
@@ -38,6 +39,11 @@ const NavBarContainor = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const classes = useStyle()
 
+    const userRole = useSelector((state) => {
+        return state.user.user.role
+    })
+
+    console.log("role", userRole);
     const userLoggedStatus = () => {
         const toggle = !isLoggedIn
         setIsloggedIn(toggle)
@@ -71,9 +77,15 @@ const NavBarContainor = (props) => {
                     </Button>
                     {isLoggedIn ? (
                         <>
-                            <Button color="inherit">
-                                <Link to="/dashboard" className={classes.linkStyle}> DashBoard</Link>
-                            </Button>
+                            {userRole === "admin" ? (
+                                <Button color="inherit">
+                                    <Link to="/dashboard" className={classes.linkStyle}> DashBoard</Link>
+                                </Button>
+                            ) : (
+                                <Button color="inherit">
+                                    <Link to="/Cources" className={classes.linkStyle}> Courses </Link>
+                                </Button>
+                            )}
                             <Button color="inherit">
                                 <Link to="/account" className={classes.linkStyle}> Account </Link>
                             </Button>
@@ -121,7 +133,6 @@ const NavBarContainor = (props) => {
             </AppBar>
 
             <Route path="/register" component={RegisterForm} exact />
-            {/* <Route path="/addstudent" component={AddStudent} exact /> */}
             <Route path="/" component={Home} exact />
             <Route path="/admin/login" render={(props) => {
                 return <AdminLogIn {...props} userLoggedStatus={userLoggedStatus} />
@@ -130,6 +141,7 @@ const NavBarContainor = (props) => {
                 return <StudentLogIn {...props} userLoggedStatus={userLoggedStatus} />
             }} exact />
             <Route path="/dashboard" component={DashBoard} exact />
+            <Route path="/Cources" component={Cources} exact />
             <Route path="/account" component={Account} exact />
             <Route path="/allstudents" component={AllStudents} exact />
         </>

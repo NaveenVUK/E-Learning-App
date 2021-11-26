@@ -28,12 +28,7 @@ const Account = () => {
 
     return (
         <div style={{ textAlign: "center", marginTop: "90px" }}>
-            {/* {isEdiClick && (
-                <>
-                    <EditAdminInfo data={editFormData} editID={editKey} EditToggle={EditToggle} />
-                    <Button onClick={EditToggle}> Cancel </Button>
-                </>
-            )} */}
+
             {Object.keys(user).length !== 0 ? (
                 <>
                     <h1>Account Info </h1>

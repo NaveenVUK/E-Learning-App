@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { StartAdminLogin } from "../../../Actions/UserActions";
+import { StartAdminLogin } from "../../Actions/AdminActions"
 
-import LogInForm from "./LogInForm";
+import LogInForm from "../Reusable Components/LogInForm";
 
 const AdminLogIn = (props) => {
     const dispatch = useDispatch()

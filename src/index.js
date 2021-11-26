@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import './index.css';
-import { StartGetStudents, StartUserInfo } from './Actions/UserActions';
+import { StartGetStudents, StartGetAdminInfo } from './Actions/AdminActions';
 import App from './App';
 import ConfigureStore from "./Store/ConfigureStore"
 
@@ -14,9 +14,13 @@ store.subscribe(() => {
   console.log("subscribe", store.getState());
 })
 
-if (localStorage.hasOwnProperty("token")) {
-  store.dispatch(StartUserInfo())
+if (localStorage.hasOwnProperty("admin")) {
+  store.dispatch(StartGetAdminInfo())
   store.dispatch(StartGetStudents())
+}
+
+if (localStorage.hasOwnProperty("student")) {
+
 }
 
 const Result = (
