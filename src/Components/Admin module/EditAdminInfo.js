@@ -12,7 +12,8 @@ import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Box } from "@mui/system";
-import { startStudentRegister, startStudentUpdate, StartAdminUpdate } from '../../Actions/AdminActions';
+import { startStudentRegister, StartAdminUpdate } from '../../Actions/AdminActions';
+import { startStudentUpdate } from '../../Actions/StudentActions';
 import { withRouter } from 'react-router';
 import EditIcon from '@mui/icons-material/Edit';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
@@ -57,7 +58,13 @@ const EditAdminInfo = (props) => {
         onSubmit: (values) => {
             let formData = {}
             formData[title] = values.name
-            dispatch(StartAdminUpdate(formData, handleClose))
+            if (localStorage.hasOwnProperty("admin")) {
+                dispatch(StartAdminUpdate(formData, handleClose))
+            } else if (localStorage.hasOwnProperty("Student")) {
+                const studentId = JSON.parse(localStorage.getItem("Student"))
+                console.log("hhh", studentId);
+                dispatch(startStudentUpdate(studentId._id, formData, handleClose, "user"))
+            }
         },
         validationSchema: formValidation
     })

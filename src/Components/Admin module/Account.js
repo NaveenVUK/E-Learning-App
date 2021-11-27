@@ -32,12 +32,16 @@ const Account = () => {
             {Object.keys(user).length !== 0 ? (
                 <>
                     <h1>Account Info </h1>
-                    <h4>UserName - {user.username}</h4> <EditAdminInfo name={user.username} title="username" />
+                    <h4>UserName - {user.username || user.name}</h4> <EditAdminInfo name={user.username || user.name} title={user.role === "admin" ? "username" : "name"} />
                     <h4>Email - {user.email} <EditAdminInfo name={user.email} title="email" /> </h4>
                     <h4>Role - {user.role} </h4> <br />
-                    <h1> Acedamy Information </h1>
-                    <h4> Academy Name - {user.academy.name} <EditAdminInfo name={user.academy.name} title="academy.name" /></h4>
-                    <h4> Academy Web Site - {user.academy.website} <EditAdminInfo name={user.academy.website} title="academy.website" /></h4>
+                    {user.role === "admin" && (
+                        <>
+                            <h1> Acedamy Information </h1>
+                            <h4> Academy Name - {user.academy.name} <EditAdminInfo name={user.academy.name} title="academy.name" /></h4>
+                            <h4> Academy Web Site - {user.academy.website} <EditAdminInfo name={user.academy.website} title="academy.website" /></h4>
+                        </>
+                    )}
                 </>
             ) : (
                 <p> Loading .... </p>

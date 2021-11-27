@@ -4,6 +4,7 @@ const userInitialState = {
     errors: [],
     isLoading: false,
     students: [],
+    courses: []
 }
 
 const UserRedcuers = (state = userInitialState, Action) => {
@@ -32,6 +33,9 @@ const UserRedcuers = (state = userInitialState, Action) => {
                 }
             })
             return { ...state, students: [...result] }
+        }
+        case "COURSES": {
+            return { ...state, courses: [...Action.payload] }
         }
         default: {
             return state

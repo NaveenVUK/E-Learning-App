@@ -74,7 +74,7 @@ const AddStudentForm = (props) => {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen} style={{ marginTop: "10px", marginLeft: "0px" }}>
+            <Button variant="contained" onClick={handleClickOpen} style={{ margin: "10px 180px 10px 10px", borderRadius: "22px" }} >
                 Add Student
             </Button>
             <Dialog

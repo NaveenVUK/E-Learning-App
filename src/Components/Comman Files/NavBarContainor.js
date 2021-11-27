@@ -13,7 +13,9 @@ import { Menu, MenuItem, Button, AppBar, Toolbar, CssBaseline, Typography } from
 import swal from "sweetalert";
 import { makeStyles } from "@mui/styles";
 import { useSelector } from "react-redux";
-import Cources from "../Student Module/Cources";
+import StudentCourses from "../Student Module/StudentCourses";
+import Courses from "../Admin module/AllCources/Courses"
+import CreateCourse from "../Admin module/AllCources/CreateCourse";
 
 const useStyle = makeStyles({
     root: {
@@ -25,6 +27,8 @@ const useStyle = makeStyles({
         color: "inherit",
         textDecoration: "none",
         verticalAlign: 'middle',
+        fontFamily: "Arial, sans-serif"
+
     },
     imageStyle: {
         height: "2rem",
@@ -39,11 +43,12 @@ const NavBarContainor = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const classes = useStyle()
 
-    const userRole = useSelector((state) => {
-        return state.user.user.role
-    })
+    // const userRole = useSelector((state) => {
+    //     return state.user.user.role
+    // })
 
-    console.log("role", userRole);
+    const userRole = JSON.parse(localStorage.getItem("user"))
+
     const userLoggedStatus = () => {
         const toggle = !isLoggedIn
         setIsloggedIn(toggle)
@@ -69,21 +74,21 @@ const NavBarContainor = (props) => {
     return (
         <>
             <CssBaseline />
-            <AppBar position="fixed" color="inherit">
+            <AppBar position="fixed" style={{ backgroundColor: "#5359f5" }}>
                 <Toolbar className={classes.root}>
-                    <img className={classes.imageStyle} src="https://cdn.codingal.com/images/logos/logos-main/logo-with-text.svg" alt="codingal" />
+                    <h3 className={classes.imageStyle}> Success Academy  </h3>
                     <Button color="inherit">
                         <Link to="/" className={classes.linkStyle}> Home </Link>
                     </Button>
                     {isLoggedIn ? (
                         <>
-                            {userRole === "admin" ? (
+                            {userRole.role === "admin" ? (
                                 <Button color="inherit">
                                     <Link to="/dashboard" className={classes.linkStyle}> DashBoard</Link>
                                 </Button>
                             ) : (
                                 <Button color="inherit">
-                                    <Link to="/Cources" className={classes.linkStyle}> Courses </Link>
+                                    <Link to="/MyCourses" className={classes.linkStyle}> Courses </Link>
                                 </Button>
                             )}
                             <Button color="inherit">
@@ -141,9 +146,11 @@ const NavBarContainor = (props) => {
                 return <StudentLogIn {...props} userLoggedStatus={userLoggedStatus} />
             }} exact />
             <Route path="/dashboard" component={DashBoard} exact />
-            <Route path="/Cources" component={Cources} exact />
+            <Route path="/MyCourses" component={StudentCourses} exact />
             <Route path="/account" component={Account} exact />
-            <Route path="/allstudents" component={AllStudents} exact />
+            <Route path="/admin/allstudents" component={AllStudents} exact />
+            <Route path="/admin/courses" component={Courses} exact />
+            <Route path="/admin/createcourse" component={CreateCourse} exact />
         </>
     )
 }

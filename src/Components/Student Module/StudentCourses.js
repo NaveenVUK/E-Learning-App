@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 
-import NewAddStudentForm from "./AddStudentForm";
-import EditStudentInfo from "../Student Module/EditStudentInfo";
-import StudentView from "./StudentView";
-import { startDeletStudent } from "../../Actions/AdminActions";
+import NewAddStudentForm from "../Admin module/AddStudentForm"
 
 import { Button, IconButton, InputBase, Paper } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,7 +11,7 @@ import swal from "sweetalert";
 import { Box } from "@mui/system";
 import SearchIcon from '@mui/icons-material/Search';
 
-const AllStudents = (props) => {
+const StudentCourses = (props) => {
     const dispatch = useDispatch()
     const [searchInput, setSearchInput] = useState("")
 
@@ -41,7 +38,7 @@ const AllStudents = (props) => {
             .then((willDelete) => {
                 if (willDelete) {
                     const altermsg = () => { swal("Poof! User has been deleted!", { icon: "success", }) }
-                    dispatch(startDeletStudent(id, altermsg));
+                    // dispatch(startDeletStudent(id, altermsg));
                 } else {
                     swal("User is safe!");
                 }
@@ -52,22 +49,21 @@ const AllStudents = (props) => {
         <div style={{ textAlign: "left", marginTop: "100px" }}>
             <h1 style={{
                 backgroundColor: "white",
-                margin: "10px 680px 30px 680px",
+                margin: "10px 80px 30px 80px",
                 borderRadius: "15px",
                 textAlign: "center"
-            }}> All Students - {students.length}</h1>
+            }}> All Courses - {students.length}</h1>
             <Box display="flex" justifyContent="space-between">
-                <Button variant="contained" onClick={() => { props.history.push("/dashboard") }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left" }}>
+                <Button variant="contained" onClick={() => { props.history.push("/") }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left" }}>
                     Back
                 </Button><br />
-                <NewAddStudentForm />
                 <Paper
                     component="form"
                     sx={{ p: '2px 4px', display: 'flex', width: 300, height: 50 }}
                 >
                     <InputBase
                         sx={{ ml: 1, flex: 1 }}
-                        placeholder="Search username"
+                        placeholder="Search course name"
                         inputProps={{ 'aria-label': searchInput }}
                         onChange={inputHandleChange}
                     />
@@ -76,38 +72,8 @@ const AllStudents = (props) => {
                     </IconButton>
                 </Paper>
             </Box>
-            <table className="table table-striped-bg table-hover table-Primar" style={{ textAlign: "center" }}>
-                <thead>
-                    <tr className="table-danger">
-                        <th > Name </th>
-                        <th> Email </th>
-                        <th> Role </th>
-                        <th> Created Date </th>
-                        <th> Updated Data </th>
-                        <th> View </th>
-                        <th> Edit </th>
-                        <th> Delete </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filterStudent.map((ele) => {
-                        return (
-                            <tr key={ele._id} className="table-primary">
-                                <td> {ele.name} </td>
-                                <td> {ele.email}</td>
-                                <td> {ele.role} </td>
-                                <td> {ele.createdAt && ele.createdAt.slice(0, 10)}</td>
-                                <td> {ele.updatedAt && ele.updatedAt.slice(0, 10)}</td>
-                                <td> <StudentView {...ele} /> </td>
-                                <td> <EditStudentInfo {...ele} /> </td>
-                                <td> <DeleteRoundedIcon onClick={() => handleEditClick(ele._id)} /></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
         </div >
     )
 }
 
-export default AllStudents
+export default StudentCourses

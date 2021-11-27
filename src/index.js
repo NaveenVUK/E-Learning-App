@@ -4,9 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import './index.css';
-import { StartGetStudents, StartGetAdminInfo } from './Actions/AdminActions';
+import { StartGetStudents, StartGetAdminInfo, startGetCourses } from './Actions/AdminActions';
 import App from './App';
 import ConfigureStore from "./Store/ConfigureStore"
+import { startGetStudent } from './Actions/StudentActions';
 
 const store = ConfigureStore()
 
@@ -14,13 +15,15 @@ store.subscribe(() => {
   console.log("subscribe", store.getState());
 })
 
-if (localStorage.hasOwnProperty("admin")) {
-  store.dispatch(StartGetAdminInfo())
-  store.dispatch(StartGetStudents())
-}
-
-if (localStorage.hasOwnProperty("student")) {
-
+if (localStorage.hasOwnProperty("token")) {
+  const userRole = JSON.parse(localStorage.getItem("user"))
+  if (userRole.role === "admin") {
+    store.dispatch(StartGetAdminInfo())
+    store.dispatch(StartGetStudents())
+    store.dispatch(startGetCourses())
+  } else if (userRole.role === "student") {
+    store.dispatch(startGetStudent(userRole._id))
+  }
 }
 
 const Result = (

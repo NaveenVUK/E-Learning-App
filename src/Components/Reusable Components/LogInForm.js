@@ -99,7 +99,7 @@ const LogInForm = (props) => {
                             >Cancel</Button>
                         </Box>
                         <Typography textAlign="right">
-                            have an {name} Account ? {name === "Admin" ? <Link to="/register"> Sign up </Link> : <strong> <br /> Connect with your admin</strong>}
+                            Don't have an {name} Account ? {name === "Admin" ? <Link to="/register"> Sign up </Link> : <strong> <br /> Connect with your admin</strong>}
                         </Typography>
                     </form >
                 </Grid>

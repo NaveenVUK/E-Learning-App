@@ -57,15 +57,17 @@ export const StartAdminLogin = (values, props, userLoggedStatus) => {
         axios.post("https://dct-e-learning.herokuapp.com/api/admin/login", values)
             .then((response) => {
                 const loginResponse = response.data
-                const decoded = jwt_decode(loginResponse.token)
+                console.log("now", loginResponse);
                 if (loginResponse.hasOwnProperty("errors")) {
                     alert(loginResponse.errors)
                 } else {
+                    const decoded = jwt_decode(loginResponse.token)
                     localStorage.setItem("token", loginResponse.token)
                     localStorage.setItem("user", JSON.stringify(decoded))
                     swal("Successfully logged in !!")
                     userLoggedStatus()
                     props.history.push("/")
+                    window.location.reload()
                 }
             })
             .catch((error) => {
@@ -91,7 +93,7 @@ export const StartGetAdminInfo = () => {
     }
 }
 
-const updateAdminInfo = (user) => {
+export const updateAdminInfo = (user) => {
     return {
         type: "ADD-USER-INFO",
         payload: user
@@ -169,5 +171,83 @@ export const removeStudent = (student) => {
     return {
         type: "REMOVE-STUDENT",
         payload: student
+    }
+}
+
+export const startCreateCourses = (formData, clearForm, navigate) => {
+    console.log("startCreateCourses", formData);
+    return (dispatch) => {
+        axios.post("https://dct-e-learning.herokuapp.com/api/courses", formData, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const courseResponse = response.data
+                console.log("courseResponse", courseResponse);
+                if (courseResponse.hasOwnProperty("errors")) {
+                    alert(courseResponse.errors)
+                } else {
+                    clearForm()
+                    navigate()
+                    // dispatch(Courses(courseResponse))
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+}
+
+export const startGetCourses = () => {
+    return (dispatch) => {
+        axios.get("https://dct-e-learning.herokuapp.com/api/courses", {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const courseResponse = response.data
+                if (courseResponse.hasOwnProperty("errors")) {
+                    alert(courseResponse.errors)
+                } else {
+                    dispatch(Courses(courseResponse))
+                    // window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+}
+
+export const Courses = (data) => {
+    return {
+        type: "COURSES",
+        payload: data
+    }
+}
+
+export const startDeleteCourse = (id, altermsg) => {
+    return (dispatch) => {
+        axios.delete(`https://dct-e-learning.herokuapp.com/api/courses/${id}`, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const deleteResponse = response.data
+                console.log("deleteResponse", deleteResponse);
+                if (deleteResponse.hasOwnProperty("errors")) {
+                    alert(deleteResponse.errors)
+                } else {
+                    altermsg()
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            })
     }
 }

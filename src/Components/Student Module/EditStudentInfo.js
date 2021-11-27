@@ -62,7 +62,7 @@ const EditStudentInfo = (props) => {
         },
         onSubmit: (values) => {
             console.log("values", values);
-            dispatch(startStudentUpdate(_id, values, handleClose))
+            dispatch(startStudentUpdate(_id, values, handleClose, "student"))
         },
         validationSchema: formValidation
     })

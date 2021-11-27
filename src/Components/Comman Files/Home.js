@@ -3,8 +3,11 @@ import React from "react";
 const Home = () => {
 
     return (
-        <div style={{ textAlign: "center", marginTop: "100px" }}>
-            <img src="	https://cdn.codingal.com/images/curriculum/first-fold/penguin-reading-book.svg" alt="image" />
+        <div style={{ marginTop: "70px", backgroundImage: "url(https://assets.spayee.xyz/themes/theme2/banner-1.png)", height: '100vh' }}>
+            <h1 >.</h1>
+            <h1 style={{ margin: "200px 0px 0px 230px", fontSize: "70px", fontWeight: "bold" }}> The Premium System </h1> <br />
+            <h1 style={{ marginLeft: "230px", fontSize: "70px", fontWeight: "bold" }}> Education</h1> <br />
+            <h3 style={{ marginLeft: "230px" }}>Future Education Technolgy </h3>
         </div>
     )
 }
