@@ -27,7 +27,7 @@ const AllStudents = (props) => {
     }
 
     const filterStudent = students.filter((ele) => {
-        return ele.name.includes(searchInput)
+        return ele.name.toLowerCase().includes(searchInput.toLowerCase())
     })
 
     const handleEditClick = (id) => {
@@ -56,7 +56,7 @@ const AllStudents = (props) => {
                 borderRadius: "15px",
                 textAlign: "center"
             }}> All Students - {students.length}</h1>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-evenly">
                 <Button variant="contained" onClick={() => { props.history.push("/dashboard") }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left" }}>
                     Back
                 </Button><br />

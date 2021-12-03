@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from 'react-router';
 
 import { startStudentRegister } from '../../Actions/AdminActions';
@@ -14,6 +14,7 @@ import * as yup from "yup"
 import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { Alert, AlertTitle } from "@mui/material";
 import { Box } from "@mui/system";
 
 const useStyles = makeStyles({
@@ -41,6 +42,10 @@ const AddStudentForm = (props) => {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch()
     const classes = useStyles()
+
+    const errors = useSelector((state) => {
+        return state.user.errors
+    })
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -92,6 +97,12 @@ const AddStudentForm = (props) => {
                             <Avatar className={classes.avatarStyle} style={{ color: "green", backgroundColor: "lightgrey" }}>
                                 <PersonAddAltIcon />
                             </Avatar>
+                            {errors && (
+                                <Alert severity="error">
+                                    <AlertTitle style={{ color: "red" }}> Error : <strong> {errors} </strong></AlertTitle>
+
+                                </Alert>
+                            )}
                             <form onSubmit={formik.handleSubmit}>
                                 <br />
                                 <TextField

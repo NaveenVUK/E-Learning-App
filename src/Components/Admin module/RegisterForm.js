@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { StartAdminRegister } from "../../Actions/AdminActions"
 
@@ -10,6 +10,7 @@ import { HowToRegRounded } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
+import { Alert, AlertTitle } from "@mui/material";
 
 const useStyles = makeStyles({
     paperStyle: {
@@ -33,6 +34,10 @@ const useStyles = makeStyles({
 const RegisterForm = (props) => {
     const dispatch = useDispatch()
     const classes = useStyles()
+
+    const errors = useSelector((state) => {
+        return state.user.errors
+    })
 
     const formValidation = yup.object({
         username: yup.string().required("username is required"),
@@ -67,6 +72,12 @@ const RegisterForm = (props) => {
                         <HowToRegRounded />
                     </Avatar>
                     <h2 className={classes.headingStyle}> Register for Admin </h2>
+                    {errors && (
+                        <Alert severity="error">
+                            <AlertTitle style={{ color: "red" }}> Error : <strong> {errors} </strong></AlertTitle>
+
+                        </Alert>
+                    )}
                     <form onSubmit={formik.handleSubmit}>
                         <br />
                         <TextField

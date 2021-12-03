@@ -23,6 +23,7 @@ if (localStorage.hasOwnProperty("token")) {
     store.dispatch(startGetCourses())
   } else if (userRole.role === "student") {
     store.dispatch(startGetStudent(userRole._id))
+    store.dispatch(startGetCourses())
   }
 }
 

@@ -16,6 +16,8 @@ import { useSelector } from "react-redux";
 import StudentCourses from "../Student Module/StudentCourses";
 import Courses from "../Admin module/AllCources/Courses"
 import CreateCourse from "../Admin module/AllCources/CreateCourse";
+import CourseDetail from "../Admin module/AllCources/CourseDetails";
+import MyCourses from "../Student Module/MyCourses";
 
 const useStyle = makeStyles({
     root: {
@@ -88,7 +90,7 @@ const NavBarContainor = (props) => {
                                 </Button>
                             ) : (
                                 <Button color="inherit">
-                                    <Link to="/MyCourses" className={classes.linkStyle}> Courses </Link>
+                                    <Link to="/student/courses" className={classes.linkStyle}> Courses </Link>
                                 </Button>
                             )}
                             <Button color="inherit">
@@ -146,11 +148,13 @@ const NavBarContainor = (props) => {
                 return <StudentLogIn {...props} userLoggedStatus={userLoggedStatus} />
             }} exact />
             <Route path="/dashboard" component={DashBoard} exact />
-            <Route path="/MyCourses" component={StudentCourses} exact />
+            <Route path="/student/courses" component={MyCourses} exact />
+            <Route path="/student/mycources" component={StudentCourses} exact />
             <Route path="/account" component={Account} exact />
             <Route path="/admin/allstudents" component={AllStudents} exact />
             <Route path="/admin/courses" component={Courses} exact />
             <Route path="/admin/createcourse" component={CreateCourse} exact />
+            <Route path="/course/details/:id" component={CourseDetail} exact />
         </>
     )
 }

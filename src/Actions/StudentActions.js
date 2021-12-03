@@ -2,16 +2,17 @@ import axios from "axios"
 import jwt_decode from "jwt-decode";
 import { updateAdminInfo } from "./AdminActions"
 import swal from "sweetalert";
+import { AddError } from "./AdminActions";
 
 export const startStudentLogin = (values, props, userLoggedStatus) => {
     return (dispatch) => {
         axios.post("https://dct-e-learning.herokuapp.com/api/students/login", values)
             .then((response) => {
                 const loginResponse = response.data
-                const decoded = jwt_decode(loginResponse.token)
                 if (loginResponse.hasOwnProperty("errors")) {
-                    alert(loginResponse.errors)
+                    dispatch(AddError(loginResponse.errors))
                 } else {
+                    const decoded = jwt_decode(loginResponse.token)
                     localStorage.setItem("token", loginResponse.token)
                     localStorage.setItem("user", JSON.stringify(decoded))
                     alert("Successfully logged in")
@@ -78,6 +79,52 @@ export const startGetStudent = (id) => {
             })
             .catch((error) => {
                 alert(error)
+            })
+    }
+}
+
+export const startEnrollCourse = (courseID) => {
+    console.log("courseID", courseID);
+    return (dispatch) => {
+        axios.patch(`https://dct-e-learning.herokuapp.com/api/courses/enroll?courseId=${courseID}`, {}, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const enrollResponse = response.data
+                console.log("enrollResponse", enrollResponse);
+                if (enrollResponse.hasOwnProperty("errors")) {
+                    alert(enrollResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
+            })
+    }
+}
+
+export const startUnEnrollCourse = (courseID) => {
+    console.log("courseID", courseID);
+    return (dispatch) => {
+        axios.patch(`https://dct-e-learning.herokuapp.com/api/courses/unenroll?courseId=${courseID}`, {}, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const enrollResponse = response.data
+                console.log("enrollResponse", enrollResponse);
+                if (enrollResponse.hasOwnProperty("errors")) {
+                    alert(enrollResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
             })
     }
 }

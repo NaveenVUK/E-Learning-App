@@ -8,7 +8,7 @@ export const StartAdminRegister = (values) => {
             .then((response) => {
                 const registerResponse = response.data
                 if (registerResponse.hasOwnProperty("errors")) {
-                    alert(registerResponse.errors)
+                    dispatch(AddError(registerResponse.errors))
                 } else {
                     swal(registerResponse)
                 }
@@ -30,13 +30,13 @@ export const startStudentRegister = (formData, props, handleClose, clearForm) =>
                 const data = response.data
                 console.log("res", data);
                 if (data.hasOwnProperty("errors")) {
-                    Object.keys(data).length === 1 ? alert(data.errors) : alert(data.message)
+                    Object.keys(data).length === 1 ? dispatch(AddError(data.errors)) : dispatch(AddError(data.message))
                 } else {
                     swal("Student Added Successfully !!")
                     dispatch(addStudent(data))
                     clearForm()
                     handleClose()
-                    props.history.push("/allstudents")
+                    props.history.push("/admin/allstudents")
                 }
             })
             .catch((error) => {
@@ -59,7 +59,8 @@ export const StartAdminLogin = (values, props, userLoggedStatus) => {
                 const loginResponse = response.data
                 console.log("now", loginResponse);
                 if (loginResponse.hasOwnProperty("errors")) {
-                    alert(loginResponse.errors)
+                    // alert(loginResponse.errors)
+                    dispatch(AddError(loginResponse.errors))
                 } else {
                     const decoded = jwt_decode(loginResponse.token)
                     localStorage.setItem("token", loginResponse.token)
@@ -248,6 +249,104 @@ export const startDeleteCourse = (id, altermsg) => {
             })
             .catch((error) => {
                 alert(error)
+            })
+    }
+}
+
+export const AddError = (error) => {
+
+    return {
+        type: "ADD-ERROR",
+        payload: error
+    }
+}
+
+export const startEnrollStudent = (courseID, studentId) => {
+    console.log(courseID, studentId);
+    return (dispatch) => {
+        axios.patch(`https://dct-e-learning.herokuapp.com/api/courses/enroll?courseId=${courseID}&studentId=${studentId}`, {}, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const enrollResponse = response.data
+                console.log("enrollResponse", enrollResponse);
+                if (enrollResponse.hasOwnProperty("errors")) {
+                    alert(enrollResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
+            })
+    }
+}
+
+export const startUnEnrollStudent = (courseID, studentId) => {
+    console.log(courseID, studentId);
+    return (dispatch) => {
+        axios.patch(`https://dct-e-learning.herokuapp.com/api/courses/unenroll?courseId=${courseID}&studentId=${studentId}`, {}, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const enrollResponse = response.data
+                console.log("enrollResponse", enrollResponse);
+                if (enrollResponse.hasOwnProperty("errors")) {
+                    alert(enrollResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
+            })
+    }
+}
+
+export const startAddLecture = (courseID, formData) => {
+    return (dispatch) => {
+        axios.post(`https://dct-e-learning.herokuapp.com/api/courses/${courseID}/lectures`, formData, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const lectureResponse = response.data
+                console.log("lectureResponse", lectureResponse);
+                if (lectureResponse.hasOwnProperty("errors")) {
+                    alert(lectureResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
+            })
+    }
+}
+
+export const startDeleteLecture = (courseID, lectureID) => {
+    return (dispatch) => {
+        axios.delete(`https://dct-e-learning.herokuapp.com/api/courses/${courseID}/lectures/${lectureID}`, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+            .then((response) => {
+                const lectureResponse = response.data
+                console.log("lectureResponse", lectureResponse);
+                if (lectureResponse.hasOwnProperty("errors")) {
+                    alert(lectureResponse.errors)
+                } else {
+                    window.location.reload()
+                }
+            })
+            .catch((error) => {
+                alert("else", error)
             })
     }
 }

@@ -8,6 +8,8 @@ import { HowToRegRounded } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
+import { Alert, AlertTitle } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
     paperStyle: {
@@ -34,6 +36,12 @@ const LogInForm = (props) => {
     const { formSubmit, name } = props
     const classes = useStyles()
 
+    const errors = useSelector((state) => {
+        return state.user.errors
+    })
+
+    console.log("errors", errors);
+
     const formValidation = yup.object({
         email: yup.string().email("Enter valid email").required("Email is required"),
         password: yup.string().required(),
@@ -58,6 +66,12 @@ const LogInForm = (props) => {
                         <HowToRegRounded />
                     </Avatar>
                     <h2 className={classes.headingStyle}> {name} Login</h2>
+                    {errors && (
+                        <Alert severity="error">
+                            <AlertTitle style={{ color: "red" }}> Error : <strong> {errors} </strong></AlertTitle>
+
+                        </Alert>
+                    )}
                     < form onSubmit={formik.handleSubmit} >
                         <br />
                         <TextField

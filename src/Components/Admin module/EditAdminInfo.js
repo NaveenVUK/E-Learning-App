@@ -58,13 +58,18 @@ const EditAdminInfo = (props) => {
         onSubmit: (values) => {
             let formData = {}
             formData[title] = values.name
-            if (localStorage.hasOwnProperty("admin")) {
-                dispatch(StartAdminUpdate(formData, handleClose))
-            } else if (localStorage.hasOwnProperty("Student")) {
-                const studentId = JSON.parse(localStorage.getItem("Student"))
-                console.log("hhh", studentId);
-                dispatch(startStudentUpdate(studentId._id, formData, handleClose, "user"))
+
+            if (localStorage.hasOwnProperty("token")) {
+                const userRole = JSON.parse(localStorage.getItem("user"))
+                if (userRole.role === "admin") {
+                    dispatch(StartAdminUpdate(formData, handleClose))
+                } else if (userRole.role === "student") {
+                    const studentId = JSON.parse(localStorage.getItem("user"))
+                    console.log("hhh", studentId);
+                    dispatch(startStudentUpdate(studentId._id, formData, handleClose, "user"))
+                }
             }
+
         },
         validationSchema: formValidation
     })

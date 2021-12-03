@@ -3,8 +3,7 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
-const DashBoard = () => {
-
+const MyCourses = () => {
 
     return (
         <div style={{
@@ -13,10 +12,10 @@ const DashBoard = () => {
         }}>
             <div >
                 <Button variant="contained" style={{ margin: "90px 10px 10px 90px", backgroundColor: "red", borderRadius: "22px", width: "380px", height: "80px", fontSize: "20px" }}>
-                    <Link to="/admin/allstudents" style={{ color: "white", textDecoration: "none" }}> All Students </Link>
+                    <Link to="/student/mycources" style={{ color: "white", textDecoration: "none" }}> My Courses </Link>
                 </Button> <br />
                 <Button variant="contained" style={{ margin: "30px 10px 10px 90px", backgroundColor: "#93e85a", borderRadius: "22px", width: "380px", height: "80px", fontSize: "20px" }}>
-                    <Link to="/admin/courses" style={{ color: "white", textDecoration: "none" }}> All Courses </Link>
+                    <Link to="/student/mycources" style={{ color: "white", textDecoration: "none" }}> All Courses </Link>
                 </Button><br />
 
             </div>
@@ -25,4 +24,4 @@ const DashBoard = () => {
     )
 }
 
-export default DashBoard
+export default MyCourses

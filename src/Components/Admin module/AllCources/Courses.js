@@ -23,6 +23,7 @@ const Courses = (props) => {
     const inputHandleChange = (e) => {
         setSearchInput(e.target.value)
     }
+    const userRole = JSON.parse(localStorage.getItem("user"))
 
     const filterCourses = courses.filter((ele) => {
         return ele.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -54,8 +55,10 @@ const Courses = (props) => {
                     borderRadius: "15px",
                     textAlign: "center"
                 }}> All Courses - {courses.length}</h1>
-                <Box display="flex" justifyContent="space-between">
-                    <Button variant="contained" onClick={() => { props.history.push("/dashboard") }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left" }}>
+                <Box display="flex" justifyContent="space-around">
+                    <Button variant="contained" onClick={() => {
+                        props.history.push("/dashboard")
+                    }} style={{ margin: "10px 10px 10px 10px", borderRadius: "22px", textAlign: "left", backgroundColor: "white", color: "red" }}>
                         Back
                     </Button><br />
                     <Button variant="contained" style={{ margin: "10px 180px 10px 10px", borderRadius: "22px" }}>

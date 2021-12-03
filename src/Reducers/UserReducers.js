@@ -1,7 +1,7 @@
 
 const userInitialState = {
     user: {},
-    errors: [],
+    errors: "",
     isLoading: false,
     students: [],
     courses: []
@@ -36,6 +36,9 @@ const UserRedcuers = (state = userInitialState, Action) => {
         }
         case "COURSES": {
             return { ...state, courses: [...Action.payload] }
+        }
+        case "ADD-ERROR": {
+            return { ...state, errors: Action.payload }
         }
         default: {
             return state
